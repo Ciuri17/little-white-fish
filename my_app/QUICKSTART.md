@@ -3,6 +3,7 @@
 ## Status Summary
 
 ✅ **Game fully implemented** with:
+
 - Complete BLoC state machine with 60 FPS game loop
 - Physics engine: gravity, thrust, collision detection
 - 6 obstacle types with unique animations
@@ -35,6 +36,7 @@ git checkout 3.41.9  # Our target version
 ```
 
 Then add Flutter to PATH (Windows):
+
 1. Right-click "This PC" → Properties
 2. Click "Advanced system settings"
 3. Click "Environment Variables"
@@ -73,12 +75,14 @@ flutter run -v
 ## Expected First Run
 
 ### Screen 1: Menu
+
 - 🐟 "Little White Fish" title
 - "Best Score: 0"
 - White PLAY button
 - Settings (Sound on/off, Language EN/CA)
 
 ### Screen 2: Game (after tapping PLAY)
+
 - White fish in center
 - Blue gradient background
 - Floating bubbles (parallax effect)
@@ -86,11 +90,13 @@ flutter run -v
 - Pause button (pause icon)
 
 ### Controls
+
 - **Hold screen** = Fish goes up (yellow fin visible, rotates up)
 - **Release screen** = Fish falls (rotates down)
 - **Tap screen** = Pause/Resume
 
 ### What Happens
+
 1. Obstacles appear from right side, move left
 2. Gold spheres are collectibles (+10 score)
 3. Brown/gray/pink/dark fish obstacles are deadly (collision = game over)
@@ -98,6 +104,7 @@ flutter run -v
 5. The further you go, the darker the biome (harder difficulty)
 
 ### Screen 3: Game Over
+
 - Shows your final score
 - Stats: Time survived, Distance traveled, Collectibles, Biome reached
 - If it's a new high score, shows 🎉 "NEW RECORD!"
@@ -108,21 +115,25 @@ flutter run -v
 ## If You Get Errors
 
 ### "flutter: command not found"
+
 - Flutter is not in PATH
 - Follow Step 1 above to add it to PATH
 - Restart your terminal
 
 ### "No device found"
+
 - Connect a physical Android/iOS device, OR
 - Start an emulator (Android Studio or Xcode)
 - Run `flutter devices` to see available devices
 
 ### Build errors
+
 - Run `flutter clean` to clear build cache
 - Then `flutter pub get` again
 - Then `flutter run`
 
 ### "pubspec.lock conflicts"
+
 - Delete `pubspec.lock`
 - Run `flutter pub get`
 
@@ -245,6 +256,7 @@ c:\Users\jciur\Desktop\Martí\my_app\
 **You're ready to run the game!** 🎮
 
 Next command to try:
+
 ```powershell
 cd "c:\Users\jciur\Desktop\Martí\my_app"
 flutter run

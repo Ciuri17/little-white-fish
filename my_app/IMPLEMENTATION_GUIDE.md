@@ -1,6 +1,7 @@
 # Little White Fish - Implementation Guide
 
 ## Overview
+
 This is a complete Flutter game implementation following clean architecture principles with BLoC state management. The game is a physics-based underwater adventure where players guide a little white fish through three distinct biomes while avoiding obstacles and collecting treasures.
 
 ## Project Structure
@@ -72,18 +73,21 @@ lib/
 ### Three-Layer Clean Architecture
 
 **Domain Layer** (Business Rules)
+
 - Pure Dart code, no frameworks
 - Entities: `FishEntity`, `ObstacleEntity`, `GameStateEntity`, `ScoreEntity`
 - Repositories: Abstract interfaces defining contracts
 - UseCases: Application-specific business logic
 
 **Data Layer** (Data Access)
+
 - Implements domain repositories
 - Models: JSON-serializable DTOs
 - DataSources: Local storage access (Hive, in-memory for now)
 - Mappers: Convert between models ↔ entities
 
 **Presentation Layer** (UI & User Interaction)
+
 - BLoC: Event-driven state machine with game loop
 - Pages: Full-screen widgets
 - Widgets: Reusable UI components
@@ -126,24 +130,27 @@ Physics Constants:
 ### Collision Detection
 
 **Obstacles** (5px hitbox margin around fish)
+
 - Rectangle-Rectangle intersection (AABB)
 - Triggers `GameOverState` on hit
 
 **Collectibles** (40px detection radius)
+
 - Circle proximity check
 - Awards +10 score, increments combo
 
 ### Biome Progression
 
-| Biome | Distance | Difficulty | Background | Decoration |
-|-------|----------|------------|------------|-----------|
-| Shallow | 0-1000m | Easy (1.0x) | Light blue gradient | Bubbles |
-| Twilight | 1000-2000m | Medium (1.5x) | Green-indigo gradient | Algae |
-| Abyss | 2000m+ | Hard (2.0x) | Black-purple gradient | Bioluminescence |
+| Biome    | Distance   | Difficulty    | Background            | Decoration      |
+| -------- | ---------- | ------------- | --------------------- | --------------- |
+| Shallow  | 0-1000m    | Easy (1.0x)   | Light blue gradient   | Bubbles         |
+| Twilight | 1000-2000m | Medium (1.5x) | Green-indigo gradient | Algae           |
+| Abyss    | 2000m+     | Hard (2.0x)   | Black-purple gradient | Bioluminescence |
 
 ## UI/UX Design
 
 ### MenuPage
+
 - Title: 🐟 "Little White Fish" with subtitle "Dive into the abyss"
 - Best Score display (loads from persistent storage)
 - PLAY button (white, rounded)
@@ -151,6 +158,7 @@ Physics Constants:
 - Blue gradient background
 
 ### GamePage
+
 - **Main Rendering**: `GameCanvas` widget
   - Biome-aware background gradient
   - Parallax scrolling decoration layer
@@ -161,6 +169,7 @@ Physics Constants:
 - **Navigation**: On game over, navigate to `/game-over`
 
 ### GameOverPage
+
 - 💀 "GAME OVER" or 🎉 "NEW RECORD!" badge
 - **Final Score**: Large, prominent display
 - **Stats Grid** (2x2):
@@ -176,32 +185,33 @@ Physics Constants:
 
 ## Obstacle Types
 
-| Type | Visual | Behavior | Danger |
-|------|--------|----------|--------|
-| Coral | Brown rounded shape | Static | ✓ Deadly |
-| Mine | Gray circle with spikes | Static, spins | ✓ Deadly |
-| Jellyfish | Pink head + tentacles | Wavy sine oscillation | ✓ Deadly |
-| Predator | Dark body + red eye | Static, menacing | ✓ Deadly |
-| Geyser | Rock base + burst effect | Animated scale pulse | ✓ Deadly |
-| Collectible | Yellow sphere + sparkles | Rotating, glowing | ✗ Beneficial |
+| Type        | Visual                   | Behavior              | Danger       |
+| ----------- | ------------------------ | --------------------- | ------------ |
+| Coral       | Brown rounded shape      | Static                | ✓ Deadly     |
+| Mine        | Gray circle with spikes  | Static, spins         | ✓ Deadly     |
+| Jellyfish   | Pink head + tentacles    | Wavy sine oscillation | ✓ Deadly     |
+| Predator    | Dark body + red eye      | Static, menacing      | ✓ Deadly     |
+| Geyser      | Rock base + burst effect | Animated scale pulse  | ✓ Deadly     |
+| Collectible | Yellow sphere + sparkles | Rotating, glowing     | ✗ Beneficial |
 
 ## Dependencies
 
 ```yaml
 flutter: 3.41.9
-flutter_bloc: 8.1.0        # State management
-equatable: 2.0.5           # Value equality
-dartz: 0.10.1              # Either<L,R> for functional error handling
-get_it: 7.6.0              # Service locator (DI)
-go_router: 13.0.0          # Navigation
-dio: 5.4.0                 # HTTP client (prepared)
-hive: 2.2.3                # Local storage (configured)
-json_annotation: 4.8.0     # JSON serialization metadata
+flutter_bloc: 8.1.0 # State management
+equatable: 2.0.5 # Value equality
+dartz: 0.10.1 # Either<L,R> for functional error handling
+get_it: 7.6.0 # Service locator (DI)
+go_router: 13.0.0 # Navigation
+dio: 5.4.0 # HTTP client (prepared)
+hive: 2.2.3 # Local storage (configured)
+json_annotation: 4.8.0 # JSON serialization metadata
 ```
 
 ## How to Run
 
 ### Prerequisites
+
 1. Flutter 3.41.9+ installed
 2. Dart SDK 3.1+
 3. A mobile device or emulator (Android/iOS)
@@ -247,7 +257,7 @@ flutter run -v
 4. **Input**
    - Hold screen → fish rises (yellow fin visible, rotates upward)
    - Release → fish falls (rotates downward)
-   - 
+   -
 5. **Collision**
    - Hit obstacle → screen shakes (optional), game ends
    - Collect gold sphere → score +10
@@ -298,12 +308,14 @@ test('Collision detected on AABB overlap', () {
 ## Known Limitations & Future Improvements
 
 **Current**:
+
 - Score persistence: In-memory only (ready for Hive integration)
 - No sound effects (structure prepared for audio manager)
 - No animations (ready for transition/particle effects)
 - No multiplayer/network (Dio prepared for future API calls)
 
 **Next Steps**:
+
 - Implement Hive local storage
 - Add sound effect manager
 - Create particle effect system
@@ -313,21 +325,25 @@ test('Collision detected on AABB overlap', () {
 ## Debugging Tips
 
 **Game loop not running?**
+
 - Check BLoC `_onStart` handler
 - Verify `GameStartEvent` is fired
 - Check Timer initialization
 
 **Fish not moving?**
+
 - Verify `GameInputEvent(true/false)` is sent on tap
 - Check `_isHoldingInput` flag in BLoC
 - Verify physics constants in `GameLocalDatasource`
 
 **Obstacles not appearing?**
+
 - Check `generateObstacles()` spawning logic
 - Verify obstacle removal when off-screen
 - Check screen dimensions passed to BLoC
 
 **Navigation not working?**
+
 - Check `app_routes.dart` route definitions
 - Verify page constructors match route builders
 - Check `BlocListener` navigation logic
@@ -335,18 +351,23 @@ test('Collision detected on AABB overlap', () {
 ## Files & Line References
 
 ### Core BLoC (~200 lines)
+
 - [game_bloc.dart](lib/presentation/bloc/game/game_bloc.dart)
 
 ### Physics Engine (~300 lines)
+
 - [game_local_datasource.dart](lib/data/datasources/local/game_local_datasource.dart)
 
 ### Rendering System (~350 lines)
+
 - [game_canvas.dart](lib/presentation/widgets/game/game_canvas.dart)
 
 ### Obstacle Rendering (~400 lines)
+
 - [obstacle_widget.dart](lib/presentation/widgets/game/obstacle_widget.dart)
 
 ### Main Pages
+
 - [menu_page.dart](lib/presentation/pages/game/menu_page.dart) - Start screen
 - [game_page.dart](lib/presentation/pages/game/game_page.dart) - Gameplay
 - [game_over_page.dart](lib/presentation/pages/game/game_over_page.dart) - Results screen
@@ -354,24 +375,28 @@ test('Collision detected on AABB overlap', () {
 ## Key Insights
 
 **Why Clean Architecture?**
+
 - Business logic (physics, collision) lives in `GameLocalDatasource` (data layer)
 - UI doesn't know about physics - changes via BLoC events/states
 - Easy to test: mock repositories, inject test data
 - Easy to refactor: change implementation without touching domain
 
 **Why BLoC?**
+
 - Game loop as event stream: `Timer` emits `GameTickEvent` at 60 FPS
 - All state changes go through `emit()`, single source of truth
 - Built-in error handling via error states
 - Testable: record events, verify state outputs
 
 **Why Either Pattern?**
+
 - All operations can fail: disk read, calculation error, etc.
 - `Either<Failure, Success>` forces handling both cases
 - No silent failures or null surprises
 - Clear error propagation through layers
 
 **Physics Feel**
+
 - Gravity = 300: Slow fall, feels floaty (underwater)
 - Thrust = -600: Strong upward push, responsive control
 - Damping = 0.95: Slight air resistance, prevents oscillation
