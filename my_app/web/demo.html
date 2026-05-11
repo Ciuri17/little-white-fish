@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Little White Fish - Web Version</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .container {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 40px;
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+      }
+      h1 {
+        color: white;
+        font-size: 3em;
+        margin-bottom: 10px;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+      .emoji {
+        font-size: 4em;
+        margin: 20px 0;
+      }
+      .subtitle {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.2em;
+        margin-bottom: 30px;
+      }
+      .status {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        color: white;
+      }
+      .status-title {
+        font-weight: bold;
+        margin-bottom: 10px;
+        font-size: 1.1em;
+      }
+      .info {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.95em;
+        line-height: 1.6;
+      }
+      .button-group {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 30px;
+      }
+      button {
+        background: white;
+        color: #667eea;
+        border: none;
+        padding: 12px 30px;
+        font-size: 1em;
+        font-weight: bold;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        background: #f0f0f0;
+      }
+      button:active {
+        transform: translateY(0);
+      }
+      .github-link {
+        margin-top: 20px;
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+      .github-link:hover {
+        color: white;
+      }
+      .code-block {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 15px;
+        color: #b0e0e6;
+        font-family: "Courier New", monospace;
+        font-size: 0.9em;
+        text-align: left;
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="emoji">🐟</div>
+      <h1>Little White Fish</h1>
+      <p class="subtitle">Dive into the abyss</p>
+
+      <div class="status">
+        <div class="status-title">⚙️ Status</div>
+        <div class="info">
+          Flutter game is successfully compiled!<br />
+          The web version requires a development server to run properly.
+        </div>
+      </div>
+
+      <div class="status">
+        <div class="status-title">🎮 How to Play</div>
+        <div class="info">
+          <strong>Controls:</strong><br />
+          • Hold the screen = Fish goes up 🐠⬆️<br />
+          • Release = Fish falls ⬇️<br />
+          • Avoid obstacles (brown coral, gray mines, pink jellyfish) 💀<br />
+          • Collect gold spheres for +10 points ⭐
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button onclick="openGuide()">📖 View Guide</button>
+        <button onclick="runLocally()">🚀 Run Locally</button>
+      </div>
+
+      <p class="github-link">
+        🔗
+        <a
+          href="https://github.com/Ciuri17/little-white-fish"
+          target="_blank"
+          style="color: inherit"
+          >View on GitHub</a
+        >
+      </p>
+    </div>
+
+    <script>
+      function openGuide() {
+        alert(
+          `TO RUN THE WEB VERSION:\n\n1. Open Terminal in c:\\Users\\jciur\\Desktop\\Martí\\my_app\n\n2. Run:\npython -m http.server 8000\n\n3. Then open: http://localhost:8000/build/web/index.html\n\nOR\n\n1. Keep this window open\n2. Check the QUICKSTART.md for full instructions`,
+        );
+      }
+
+      function runLocally() {
+        alert(
+          `QUICK START:\n\n1. Keep Flutter running in terminal\n\n2. For Android/iOS:\n   - Connect device or start emulator\n   - Run: C:\\flutter\\bin\\flutter.bat run\n\n3. For Web:\n   - Open another terminal\n   - cd c:\\Users\\jciur\\Desktop\\Martí\\my_app\n   - python -m http.server 8000\n   - Visit http://localhost:8000/build/web/index.html\n\nCheck QUICKSTART.md for more details!`,
+        );
+      }
+
+      // Auto-check if Flutter dev server is running
+      setTimeout(() => {
+        fetch("http://localhost:8080")
+          .then(() => {
+            document.querySelector(".status-title").textContent =
+              "✅ Flutter Dev Server Running";
+            document.querySelector(".info").textContent =
+              'The Flutter development server is active!\n\nClick "Run Locally" to continue.';
+          })
+          .catch(() => {
+            // Server not running, that's fine
+          });
+      }, 1000);
+    </script>
+  </body>
+</html>
